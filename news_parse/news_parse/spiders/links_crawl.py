@@ -12,4 +12,4 @@ class LinksCrawlSpider(CrawlSpider):
     )
 
     def parse_links(self, response):
-        print('a')
+        pass
