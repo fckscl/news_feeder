@@ -7,13 +7,12 @@ class LinksSpider(scrapy.Spider):
     start_url = ['https://trashbox.ru/texts/']
 
     def start_requests(self):
-        
         urls = ['https://trashbox.ru/texts/']
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        for link in response.css('a.a_topic_cover::attr(href)'):
+        for link in response.css('a.a_topic_cover::attr(href)')[10]:
             yield response.follow(link, callback=self.parse_trashbox)
 
     def parse_trashbox():
