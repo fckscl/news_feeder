@@ -20,3 +20,7 @@ class LinksSpider(scrapy.Spider):
         title = response.css('title::text').get()
         article = response.css('p::text')
         t = map(response.css.get, article)
+        yield {
+            'title': title,
+            'text' : t
+        }

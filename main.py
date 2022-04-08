@@ -10,6 +10,7 @@ from kivy.metrics import dp
 from bs4 import BeautifulSoup
 from kivy.uix.spinner import Spinner
 import requests
+from news_parse.news_parse.spiders.links_spider import LinksSpider
 #from mnist import res
  
 
@@ -40,6 +41,10 @@ class Stack(BoxLayout):
             #n.parse = "Hello!"
             spinner.parent.add_widget(n)
             print(text)
+        btn_next = Button(text='next page')
+        btn_next.size_hint = (1, None)
+        btn_next.height = dp(48)
+        spinner.parent.add_widget(btn_next)
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -47,26 +52,6 @@ class Stack(BoxLayout):
         dd.bind(text = Stack.site_selected)
         self.add_widget(dd)
 
-
-class BoxLayoutTest(BoxLayout):
-    i = 0
-    name = (str(0))
-    boo = False
-    def buttonClicked(self):
-        self.i+=1
-        self.name = (str(self.i))
-        print('clicked')
-    def minus(self):
-        self.i -= 1
-        self.name = (str(self.i))
-        print('minus')
-
-class MainWidget(Widget):
-    pass 
-
-
-class Anchor(AnchorLayout):
-    pass
 
 class MainApp(App):
     pass

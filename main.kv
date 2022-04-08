@@ -27,46 +27,4 @@ Parse:
     size_hint: 1, None
     height: self.minimum_height
     spacing: '10dp'
-
-<ScrollTest@ScrollView>:
-    BoxLayoutTest
-
-<MainWidget>:
-    Button:
-        text: 'Hello'
-        size: "40dp", "40dp"
-
-    Label:
-        text: 'Hello2'
-        size: "40dp", "40dp"
-        pos: "100dp", "100dp"
-        color: .15, .70, .42, 1
-<BoxLayoutTest>:
-    Button:
-        text: 'a'
-        on_press: root.buttonClicked()
-    Label:
-        text: root.name
-    
-    ScrollView:
-        BoxLayout:
-            size_hint: 1, None
-            height: self.minimum_height
-            orientation: 'vertical'
-            Button:
-                text: 'c'
-                size_hint: None, None
-                size: '200dp', '500dp'
-                on_press: root.minus()
-            Button:
-                text: 'd'
-                size_hint: None, None
-                size: '200dp', '500dp'
-<Anchor>:
-    anchor_x: "right"
-    anchor_y: 'top'
-    Button:
-        text: 'anchor'
-        size_hint: .1, .1
-        
         
