@@ -29,7 +29,7 @@ class Stack(BoxLayout):
         sp = LinksSpider
         data = sp.start_requests(sp)
         for i in range(10):
-            n = News(data['title'], data['text'])
+            n = News('text', 'title')
             n.t = str(i+1)
             #n.parse = "Hello!"
             spinner.parent.add_widget(n)
