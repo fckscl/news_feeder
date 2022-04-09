@@ -8,7 +8,7 @@ from news_parse.news_parse.spiders.links_spider import LinksSpider
  
 from kivymd.theming import ThemeManager
 from kivymd.uix.button import MDRaisedButton
-from kivymd.uix.menu import MDMenu
+from kivymd.uix.menu import MDDropdownMenu
 
 
 class News(BoxLayout):
@@ -45,6 +45,17 @@ class Stack(BoxLayout):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        site = MDRaisedButton(text='Сайт')
+        site.size_hint = (1, None)
+        site.height = dp(48)
+        
+        select = MDDropdownMenu()
+        # select.caller = site
+        select.items = ['Habr', 'Tproger', 'Trashbox']
+        #site.on_release()
+        site.on_release = select.open()
+        # site.on_press = select.open()
+        self.add_widget(site)
         dd = Spinner(size_hint_y=None, height=dp(48), values=('Habr', 'Tproger', 'Trashbox'), text='Сайт')
         dd.bind(text = Stack.site_selected)
         self.add_widget(dd)
@@ -54,7 +65,7 @@ class MainApp(MDApp):
     theme_cls = ThemeManager()
     title = 'Trash'
     def build(self):
-        self.theme_cls.theme_style = 'Light'
+        self.theme_cls.theme_style = 'Dark'
         return super().build()
 
 
