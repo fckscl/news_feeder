@@ -1,18 +1,22 @@
 #:kivy 2.1
+#:import MDRaisedButton kivymd.uix.button
+#:import MDLabel kivymd.uix.label.MDLabel
+
+
 Parse:
 
 <News>:
     orientation: 'vertical'
     size_hint: 1, None
     height: self.minimum_height
-    Button:
+    MDRaisedButton:
         id: "button_title"
         #size: '200dp', '200dp'
         size_hint: 1, None
         height: '48dp'
         text: root.t
         on_press: root.button_clicked()
-    Label:
+    MDLabel:
         id: "label_text"
         size_hint: 1, None
         text_size: root.width, None

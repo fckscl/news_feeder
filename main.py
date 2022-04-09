@@ -1,11 +1,15 @@
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
+# from kivy.uix.button import Button
 from kivy.metrics import dp
 from kivy.uix.spinner import Spinner
 from news_parse.news_parse.spiders.links_spider import LinksSpider
 #from mnist import res
  
+from kivymd.theming import ThemeManager
+from kivymd.uix.button import MDRaisedButton
+from kivymd.uix.menu import MDMenu
+
 
 class News(BoxLayout):
     t = 'Заглавие новости'
@@ -34,7 +38,7 @@ class Stack(BoxLayout):
             #n.parse = "Hello!"
             spinner.parent.add_widget(n)
             print(text)
-        btn_next = Button(text='next page')
+        btn_next = MDRaisedButton(text='next page')
         btn_next.size_hint = (1, None)
         btn_next.height = dp(48)
         spinner.parent.add_widget(btn_next)
@@ -46,8 +50,12 @@ class Stack(BoxLayout):
         self.add_widget(dd)
 
 
-class MainApp(App):
-    pass
+class MainApp(MDApp):
+    theme_cls = ThemeManager()
+    title = 'Trash'
+    def build(self):
+        self.theme_cls.theme_style = 'Light'
+        return super().build()
 
 
 MainApp().run()
