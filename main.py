@@ -8,7 +8,7 @@ from news_parse.news_parse.spiders.links_spider import LinksSpider
  
 # from KivyMD.kivymd.uix.button import MDRaisedButton
 from kivymd.theming import ThemeManager
-from kivymd.uix.button import MDRaisedButton
+from kivymd.uix.button import MDFillRoundFlatButton, MDRoundFlatButton
 from kivymd.uix.menu import MDDropdownMenu
 # from kivy.properties import ObjectProperty
 
@@ -40,14 +40,14 @@ class Stack(BoxLayout):
             n.t = str(i+1)
             #n.parse = "Hello!"
             self.add_widget(n)
-        btn_next = MDRaisedButton(text='next page')
+        btn_next = MDFillRoundFlatButton(text='next page')
         btn_next.size_hint = (1, None)
         btn_next.height = dp(48)
         self.add_widget(btn_next)
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        site = MDRaisedButton(
+        site = MDRoundFlatButton(
             text='Сайт',
             size_hint = (1, None),
             height = dp(48)
@@ -66,10 +66,7 @@ class Stack(BoxLayout):
             )
         site.on_release = select.open
         self.add_widget(site)
-        dd = Spinner(size_hint_y=None, height=dp(48), values=('Habr', 'Tproger', 'Trashbox'), text='Сайт')
-        dd.bind(text = Stack.site_selected)
-        self.add_widget(dd)
-
+        
 
 class MainApp(MDApp):
     theme_cls = ThemeManager()

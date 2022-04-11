@@ -1,5 +1,5 @@
 #:kivy 2.1
-#:import MDRaisedButton kivymd.uix.button
+#:import MDFillRoundFlatButton kivymd.uix.button
 #:import MDLabel kivymd.uix.label.MDLabel
 
 
@@ -9,7 +9,7 @@ Parse:
     orientation: 'vertical'
     size_hint: 1, None
     height: self.minimum_height
-    MDRaisedButton:
+    MDFillRoundFlatButton:
         id: "button_title"
         #size: '200dp', '200dp'
         size_hint: 1, None
@@ -28,7 +28,8 @@ Parse:
 
 <Stack>:
     orientation: 'vertical'
-    size_hint: 1, None
+    size_hint: 0.9, None
+    # pos_hint: 0.5, None
     height: self.minimum_height
     spacing: '10dp'
         
