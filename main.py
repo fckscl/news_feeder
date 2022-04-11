@@ -6,9 +6,11 @@ from kivy.uix.spinner import Spinner
 from news_parse.news_parse.spiders.links_spider import LinksSpider
 #from mnist import res
  
+# from KivyMD.kivymd.uix.button import MDRaisedButton
 from kivymd.theming import ThemeManager
 from kivymd.uix.button import MDRaisedButton
 from kivymd.uix.menu import MDDropdownMenu
+# from kivy.properties import ObjectProperty
 
 
 class News(BoxLayout):
@@ -29,32 +31,52 @@ class News(BoxLayout):
     
 
 class Stack(BoxLayout):
-    def site_selected(spinner, text):
+    def site_selected(self, text):
+        print(text)
         sp = LinksSpider
         data = sp.start_requests(sp)
         for i in range(10):
             n = News('text', 'title')
             n.t = str(i+1)
             #n.parse = "Hello!"
-            spinner.parent.add_widget(n)
-            print(text)
+            self.parent.add_widget(n)
         btn_next = MDRaisedButton(text='next page')
         btn_next.size_hint = (1, None)
         btn_next.height = dp(48)
-        spinner.parent.add_widget(btn_next)
+        self.parent.add_widget(btn_next)
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        site = MDRaisedButton(text='Сайт')
-        site.size_hint = (1, None)
-        site.height = dp(48)
-        
-        select = MDDropdownMenu()
+        site = MDRaisedButton(
+            text='Сайт',
+            size_hint = (1, None),
+            height = dp(48)
+            )
+        menu_items = [
+            {
+                "viewclass": "OneLineListItem",
+                "text": f"{i}",
+                'on_release': Stack.site_selected
+            } for i in ('Habr', 'Trashbox', 'Tproger')
+        ]
+        select = MDDropdownMenu(
+            width_mult=4,
+            caller=site, 
+            items=menu_items,
+            on_release=Stack.site_selected
+            )
         # select.caller = site
-        select.items = ['Habr', 'Tproger', 'Trashbox']
-        #site.on_release()
-        site.on_release = select.open()
-        # site.on_press = select.open()
+        # select.items.append(
+        #     {'text': 'Habr'}
+        # )
+        # select.items.append(
+        #     {'text': 'Trashbox'}
+        # )
+        # select.items.append(
+        #     {'text': 'Tproger'}
+        # )
+        # select.bind(on_release=Stack.site_selected)
+        site.on_release = select.open
         self.add_widget(site)
         dd = Spinner(size_hint_y=None, height=dp(48), values=('Habr', 'Tproger', 'Trashbox'), text='Сайт')
         dd.bind(text = Stack.site_selected)
