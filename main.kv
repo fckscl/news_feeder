@@ -12,13 +12,16 @@ Parse:
     MDFillRoundFlatButton:
         id: "button_title"
         #size: '200dp', '200dp'
-        size_hint: 1, None
+        size_hint: 0.8, None
+        # pos_hint: {'center_x' : 0.5}
+        pos_hint: {'center_x' : 0.5}
         height: '48dp'
         text: root.t
         on_press: root.button_clicked()
     MDLabel:
         id: "label_text"
-        size_hint: 1, None
+        pos_hint: {'center_x' : 0.5}
+        size_hint: 0.8, None
         text_size: root.width, None
         size: self.texture_size
         text: root.parse
@@ -28,8 +31,7 @@ Parse:
 
 <Stack>:
     orientation: 'vertical'
-    size_hint: 0.9, None
-    # pos_hint: 0.5, None
+    size_hint: 1, None
     height: self.minimum_height
     spacing: '10dp'
         

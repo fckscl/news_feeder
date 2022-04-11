@@ -38,7 +38,6 @@ class Stack(BoxLayout):
         for i in range(10):
             n = News('text', 'title')
             n.t = str(i+1)
-            #n.parse = "Hello!"
             self.add_widget(n)
         btn_next = MDFillRoundFlatButton(text='next page')
         btn_next.size_hint = (1, None)
