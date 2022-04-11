@@ -3,7 +3,7 @@ from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 
 class LinksCrawlSpider(CrawlSpider):
-    name = "links"
+    name = "links_crawl"
     start_url = ['https://trashbox.ru/texts/']
 
     rules = (
