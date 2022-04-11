@@ -39,11 +39,11 @@ class Stack(BoxLayout):
             n = News('text', 'title')
             n.t = str(i+1)
             #n.parse = "Hello!"
-            self.parent.add_widget(n)
+            self.add_widget(n)
         btn_next = MDRaisedButton(text='next page')
         btn_next.size_hint = (1, None)
         btn_next.height = dp(48)
-        self.parent.add_widget(btn_next)
+        self.add_widget(btn_next)
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -56,26 +56,14 @@ class Stack(BoxLayout):
             {
                 "viewclass": "OneLineListItem",
                 "text": f"{i}",
-                'on_release': Stack.site_selected
+                'on_release': lambda x=f"{i}": self.site_selected(x)
             } for i in ('Habr', 'Trashbox', 'Tproger')
         ]
         select = MDDropdownMenu(
             width_mult=4,
             caller=site, 
-            items=menu_items,
-            on_release=Stack.site_selected
+            items=menu_items
             )
-        # select.caller = site
-        # select.items.append(
-        #     {'text': 'Habr'}
-        # )
-        # select.items.append(
-        #     {'text': 'Trashbox'}
-        # )
-        # select.items.append(
-        #     {'text': 'Tproger'}
-        # )
-        # select.bind(on_release=Stack.site_selected)
         site.on_release = select.open
         self.add_widget(site)
         dd = Spinner(size_hint_y=None, height=dp(48), values=('Habr', 'Tproger', 'Trashbox'), text='Сайт')
