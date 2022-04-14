@@ -32,16 +32,18 @@ class News(BoxLayout):
 
 class Stack(BoxLayout):
     def site_selected(self, text):
-        print(text)
+        print(self)
         sp = LinksSpider
         data = sp.start_requests(sp)
+        print((data))
         for i in range(10):
             n = News('text', 'title')
             n.t = str(i+1)
             self.add_widget(n)
-        btn_next = MDFillRoundFlatButton(text=f'Следующая страница {text}')
+        btn_next = MDFillRoundFlatButton(text=f'Следующая страница {text}', on_release=lambda text: self.site_selected(text))
         btn_next.size_hint = (1, None)
         btn_next.height = dp(48)
+        # btn_next.on_release = self.
         self.add_widget(btn_next)
     
     def __init__(self, **kwargs):
