@@ -1,16 +1,17 @@
 from kivymd.app import MDApp
 from kivy.uix.boxlayout import BoxLayout
-# from kivy.uix.button import Button
 from kivy.metrics import dp
 from kivy.uix.spinner import Spinner
+
 from news_parse.news_parse.spiders.links_spider import LinksSpider
-#from mnist import res
+# from scrapy.crawler import CrawlerProcess
+from twisted.internet import reactor
+from scrapy.crawler import CrawlerRunner
+from scrapy.utils.log import configure_logging
  
-# from KivyMD.kivymd.uix.button import MDRaisedButton
 from kivymd.theming import ThemeManager
 from kivymd.uix.button import MDFillRoundFlatButton, MDRoundFlatButton
 from kivymd.uix.menu import MDDropdownMenu
-# from kivy.properties import ObjectProperty
 
 
 class News(BoxLayout):
@@ -22,7 +23,7 @@ class News(BoxLayout):
         #url = 'https://habr.com/ru/post/544828/'
         self.t = title
         self.parse = text
-        print(self.t)
+        # print(self.t)
     
     def button_clicked(self):
         print(self.t)
@@ -31,16 +32,27 @@ class News(BoxLayout):
     
 
 class Stack(BoxLayout):
-    def site_selected(self, text):
+    def site_selected(self, text_site):
         print(self)
-        sp = LinksSpider
-        data = sp.start_requests(sp)
-        print((data))
+        configure_logging({'LOG_FORMAT': '%(levelname)s: %(message)s'})
+        runner = CrawlerRunner()
+
+        # process = CrawlerProcess({
+        #     'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
+        # })
+
+        # process.crawl("links", domain='scrapy.org')
+        # process.start(stop_after_crawl=False)
+        d = runner.crawl(LinksSpider)
+        d.addBoth(lambda _: reactor.stop())
+        reactor.run()
+        # # for i in data:
+        # #     print(i)
         for i in range(10):
             n = News('text', 'title')
             n.t = str(i+1)
             self.add_widget(n)
-        btn_next = MDFillRoundFlatButton(text=f'Следующая страница {text}', on_release=lambda text: self.site_selected(text))
+        btn_next = MDFillRoundFlatButton(text=f'Следующая страница {text_site}', on_release=lambda _: self.site_selected(text_site=text_site))
         btn_next.size_hint = (1, None)
         btn_next.height = dp(48)
         # btn_next.on_release = self.
@@ -71,7 +83,7 @@ class Stack(BoxLayout):
 
 class MainApp(MDApp):
     theme_cls = ThemeManager()
-    title = 'Trash'
+    title = 'JankYard'
     def build(self):
         self.theme_cls.theme_style = 'Dark'
         return super().build()
