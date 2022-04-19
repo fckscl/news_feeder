@@ -32,19 +32,17 @@ class News(BoxLayout):
     
 
 class Stack(BoxLayout):
-    settings = get_project_settings()
-    runner = CrawlerRunner(settings)
-    d = runner.crawl(LinksSpider)
-    d.addBoth(lambda _: reactor.stop())
-
     def site_selected(self, text_site):
         print(self)
         # configure_logging({'LOG_FORMAT': '%(levelname)s: %(message)s'})
-        
+        settings = get_project_settings()
+        runner = CrawlerRunner(settings)
+        d = runner.crawl(LinksSpider)
+        d.addBoth(lambda _: reactor.stop())
         reactor.run()
         # for i in d:
         #     print(i)
-        
+        print(d)
         for i in range(10):
             n = News('text', 'title')
             n.t = str(i+1)
