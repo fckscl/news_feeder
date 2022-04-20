@@ -18,20 +18,22 @@ class News(BoxLayout):
 
     def __init__(self, title, text, **kwargs):
         super().__init__(**kwargs)
-        self.t = title
-        self.parse = text
+        self.ids.button_title.text = title
+        self.ids.label_text.text = text
     
     def button_clicked(self):
-        print(self.t)
-        print(self.parse)
-        #self.parent.ids.label_text.text = self.parent.parse
-        #self.ids.label_text.text = self.parse
+        print(self)
+        # print(self.parse)
+        # print(self.ids)
+        # self.parent.ids.label_text.text = self.parent.parse
+        # self.ids.label_text.text = self.parse
     
 
 class Stack(BoxLayout):
     def site_selected(self, text_site):
         print(self)
-        configure_logging({'LOG_FORMAT': '%(levelname)s: %(message)s'})
+        configure_logging({
+            'LOG_ENABLED': False})
         process = CrawlerProcess(settings={
             "FEEDS": {
                 "items.csv": {"format": "csv"},
@@ -54,8 +56,8 @@ class Stack(BoxLayout):
                 # Вывод строк
                 count += 1
                 n = News(row['title'], row['text'])
-                n.t = row['title']
-                n.parse = row['text']
+                # n.t = row['title']
+                # n.parse = row['text']
                 self.add_widget(n)
             print(f'Всего в файле {count + 1} строк.')
 

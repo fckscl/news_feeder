@@ -10,7 +10,7 @@ Parse:
     size_hint: 1, None
     height: self.minimum_height
     MDFillRoundFlatButton:
-        id: "button_title"
+        id: button_title
         #size: '200dp', '200dp'
         size_hint: 0.8, None
         # pos_hint: {'center_x' : 0.5}
@@ -19,7 +19,7 @@ Parse:
         text: root.t
         on_press: root.button_clicked()
     MDLabel:
-        id: "label_text"
+        id: label_text
         pos_hint: {'center_x' : 0.5}
         size_hint: 0.8, None
         text_size: root.width, None
