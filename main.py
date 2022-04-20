@@ -3,11 +3,11 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.metrics import dp
 
 from news_parse.news_parse.spiders.links_spider import LinksSpider
-# from scrapy.crawler import CrawlerProcess
-from twisted.internet import reactor
-from scrapy.crawler import CrawlerRunner
+from scrapy.crawler import CrawlerProcess
+# from twisted.internet import reactor
+# from scrapy.crawler import CrawlerRunner
 from scrapy.utils.log import configure_logging
-from scrapy.utils.project import get_project_settings
+# from scrapy.utils.project import get_project_settings
  
 from kivymd.theming import ThemeManager
 from kivymd.uix.button import MDFillRoundFlatButton, MDRoundFlatButton
@@ -34,15 +34,31 @@ class News(BoxLayout):
 class Stack(BoxLayout):
     def site_selected(self, text_site):
         print(self)
-        # configure_logging({'LOG_FORMAT': '%(levelname)s: %(message)s'})
-        settings = get_project_settings()
-        runner = CrawlerRunner(settings)
-        d = runner.crawl(LinksSpider)
-        d.addBoth(lambda _: reactor.stop())
-        reactor.run()
-        # for i in d:
-        #     print(i)
-        print(d)
+        configure_logging({'LOG_FORMAT': '%(levelname)s: %(message)s'})
+        # settings = get_project_settings()
+        # runner = CrawlerRunner(settings = {
+        #     'FEED_URI': 'trash.csv',
+        #     'FEED_FORMAT': 'csv'
+        # })
+        # d = runner.crawl(LinksSpider)
+        # d.addBoth(lambda _: reactor.stop())
+        # reactor.run()
+        # # for i in d:
+        # #     print(i)
+        # print(d)
+        data = {}
+        process = CrawlerProcess(settings={
+            "FEEDS": {
+                "items.csv": {"format": "csv"},
+            },
+            'setdict': data
+        })
+
+        process.crawl(LinksSpider)
+        process.start()
+        print(data)
+        # print(type(process))
+        
         for i in range(10):
             n = News('text', 'title')
             n.t = str(i+1)

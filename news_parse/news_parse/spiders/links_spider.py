@@ -1,6 +1,8 @@
 # from urllib import response
 import scrapy
 
+from news_parse.news_parse.items import NewsParseItem
+from scrapy.loader import ItemLoader
 
 class LinksSpider(scrapy.Spider):
     name = "links"
@@ -14,11 +16,10 @@ class LinksSpider(scrapy.Spider):
         
 
     def parse_trashbox(self, response):
-        title = response.css('title::text').get()
-        article = response.css('p::text').get()
-        
-        yield {
-            'title': title,
-            'text' : article,
-            'next' : self.trashbox            
-        }
+        ld = ItemLoader(item=NewsParseItem(), response=response)
+
+        ld.add_value('next', self.trashbox)
+        ld.add_css('text', 'p::text')
+        ld.add_css('title', 'title::text')
+
+        yield ld.load_item()
