@@ -23,8 +23,7 @@ class News(BoxLayout):
     
     def button_clicked(self):
         print(self.t)
-        self.t = self.t
-        self.parse = self.parse
+        print(self.parse)
         #self.parent.ids.label_text.text = self.parent.parse
         #self.ids.label_text.text = self.parse
     
@@ -54,9 +53,9 @@ class Stack(BoxLayout):
                     print(f'Файл содержит столбцы: {", ".join(row)}')
                 # Вывод строк
                 count += 1
-                n = News(row['text'], row['title'])
-                # n.t = row['title']
-                # n.parse = row['text']
+                n = News(row['title'], row['text'])
+                n.t = row['title']
+                n.parse = row['text']
                 self.add_widget(n)
             print(f'Всего в файле {count + 1} строк.')
 

@@ -13,4 +13,3 @@ class NewsParseItem(scrapy.Item):
     title = scrapy.Field()
     text = scrapy.Field(input_processor = MapCompose(output_processor = TakeFirst()))
     next = scrapy.Field()
-    pass
