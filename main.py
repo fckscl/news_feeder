@@ -4,10 +4,8 @@ from kivy.metrics import dp
 
 from news_parse.news_parse.spiders.links_spider import LinksSpider
 from scrapy.crawler import CrawlerProcess
-# from twisted.internet import reactor
-# from scrapy.crawler import CrawlerRunner
 from scrapy.utils.log import configure_logging
-# from scrapy.utils.project import get_project_settings
+import csv
  
 from kivymd.theming import ThemeManager
 from kivymd.uix.button import MDFillRoundFlatButton, MDRoundFlatButton
@@ -20,13 +18,13 @@ class News(BoxLayout):
 
     def __init__(self, title, text, **kwargs):
         super().__init__(**kwargs)
-        #url = 'https://habr.com/ru/post/544828/'
         self.t = title
         self.parse = text
-        # print(self.t)
     
     def button_clicked(self):
         print(self.t)
+        self.t = self.t
+        self.parse = self.parse
         #self.parent.ids.label_text.text = self.parent.parse
         #self.ids.label_text.text = self.parse
     
@@ -35,38 +33,40 @@ class Stack(BoxLayout):
     def site_selected(self, text_site):
         print(self)
         configure_logging({'LOG_FORMAT': '%(levelname)s: %(message)s'})
-        # settings = get_project_settings()
-        # runner = CrawlerRunner(settings = {
-        #     'FEED_URI': 'trash.csv',
-        #     'FEED_FORMAT': 'csv'
-        # })
-        # d = runner.crawl(LinksSpider)
-        # d.addBoth(lambda _: reactor.stop())
-        # reactor.run()
-        # # for i in d:
-        # #     print(i)
-        # print(d)
-        data = {}
         process = CrawlerProcess(settings={
             "FEEDS": {
                 "items.csv": {"format": "csv"},
-            },
-            'setdict': data
+            }
         })
 
         process.crawl(LinksSpider)
         process.start()
-        print(data)
-        # print(type(process))
-        
-        for i in range(10):
-            n = News('text', 'title')
-            n.t = str(i+1)
-            self.add_widget(n)
+
+        with open("items.csv", encoding='utf-8') as r_file:
+            # Создаем объект DictReader, указываем символ-разделитель ","
+            file_reader = csv.DictReader(r_file, delimiter = ",")
+            # Счетчик для подсчета количества строк и вывода заголовков столбцов
+            count = 0
+            # Считывание данных из CSV файла
+            for row in file_reader:
+                if count == 0:
+                    # Вывод строки, содержащей заголовки для столбцов
+                    print(f'Файл содержит столбцы: {", ".join(row)}')
+                # Вывод строк
+                count += 1
+                n = News(row['text'], row['title'])
+                # n.t = row['title']
+                # n.parse = row['text']
+                self.add_widget(n)
+            print(f'Всего в файле {count + 1} строк.')
+
+        # for i in range(10):
+        #     n = News('text', 'title')
+        #     n.t = str(i+1)
+        #     self.add_widget(n)
         btn_next = MDFillRoundFlatButton(text=f'Следующая страница {text_site}', on_release=lambda _: self.site_selected(text_site=text_site))
         btn_next.size_hint = (1, None)
         btn_next.height = dp(48)
-        # btn_next.on_release = self.
         self.add_widget(btn_next)
     
     def __init__(self, **kwargs):
