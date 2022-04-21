@@ -17,7 +17,7 @@ class LinksSpider(scrapy.Spider):
 
     def parse_trashbox(self, response):
         ld = ItemLoader(item=NewsParseItem(), response=response)
-
+        
         ld.add_value('next', self.trashbox)
         ld.add_css('text', 'p::text')
         ld.add_css('title', 'title::text')

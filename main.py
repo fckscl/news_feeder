@@ -4,7 +4,8 @@ from kivy.metrics import dp
 
 from news_parse.news_parse.spiders.links_spider import LinksSpider
 from scrapy.crawler import CrawlerProcess
-from scrapy.utils.log import configure_logging
+# from scrapy.utils.log import configure_logging
+import webbrowser    
 import csv
  
 from kivymd.theming import ThemeManager
@@ -22,7 +23,8 @@ class News(BoxLayout):
         self.ids.label_text.text = text
     
     def button_clicked(self):
-        print(self)
+        print(self)    
+        webbrowser.open('https://trashbox.ru/link/the-earth-is-not-round')
         # print(self.parse)
         # print(self.ids)
         # self.parent.ids.label_text.text = self.parent.parse
@@ -32,12 +34,13 @@ class News(BoxLayout):
 class Stack(BoxLayout):
     def site_selected(self, text_site):
         print(self)
-        configure_logging({
-            'LOG_ENABLED': False})
         process = CrawlerProcess(settings={
             "FEEDS": {
-                "items.csv": {"format": "csv"},
-            }
+                "items.csv": {
+                    "format": "csv",
+                    'overwrite': 'True'},
+            },
+            'LOG_ENABLED': 'False'
         })
 
         process.crawl(LinksSpider)
