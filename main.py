@@ -14,17 +14,19 @@ from kivymd.uix.menu import MDDropdownMenu
 
 
 class News(BoxLayout):
-    t = 'Заглавие новости'
-    parse = 'You can bind to events in Kv using the “:” syntax, that is, associating a callback to an event:Widget:    on_size: my_callback()You can pass he values dispatched by the signal using the args eyword:TextInput:    on_text: app.search(args[1])More omplex expressions can be used, like:pos: self.enter_x - self.texture_size[0] / 2., self.center_y - elf.texture_size[1] / 2.This expression listens for a hange in center_x, center_y, and texture_size. If one of them changes, the expression will be re-evaluated to update the pos field.'
+    # t = 'Заглавие новости'
+    # parse = 'You can bind to events in Kv using the “:” syntax, that is, associating a callback to an event:Widget:    on_size: my_callback()You can pass he values dispatched by the signal using the args eyword:TextInput:    on_text: app.search(args[1])More omplex expressions can be used, like:pos: self.enter_x - self.texture_size[0] / 2., self.center_y - elf.texture_size[1] / 2.This expression listens for a hange in center_x, center_y, and texture_size. If one of them changes, the expression will be re-evaluated to update the pos field.'
+    link = ''
 
-    def __init__(self, title, text, **kwargs):
+    def __init__(self, title, text, link, **kwargs):
         super().__init__(**kwargs)
         self.ids.button_title.text = title
         self.ids.label_text.text = text
+        self.link = link
     
     def button_clicked(self):
-        print(self)    
-        webbrowser.open('https://trashbox.ru/link/the-earth-is-not-round')
+        print(self.link)    
+        webbrowser.open(self.link)
         # print(self.parse)
         # print(self.ids)
         # self.parent.ids.label_text.text = self.parent.parse
@@ -58,9 +60,7 @@ class Stack(BoxLayout):
                     print(f'Файл содержит столбцы: {", ".join(row)}')
                 # Вывод строк
                 count += 1
-                n = News(row['title'], row['text'])
-                # n.t = row['title']
-                # n.parse = row['text']
+                n = News(row['title'], row['text'], row['link'][6:-2])
                 self.add_widget(n)
             print(f'Всего в файле {count + 1} строк.')
 

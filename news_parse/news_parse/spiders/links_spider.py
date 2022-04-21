@@ -21,5 +21,6 @@ class LinksSpider(scrapy.Spider):
         ld.add_value('next', self.trashbox)
         ld.add_css('text', 'p::text')
         ld.add_css('title', 'title::text')
+        ld.add_value('link', response)
 
         yield ld.load_item()
