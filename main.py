@@ -54,6 +54,7 @@ class Stack(BoxLayout):
             process.crawl(HabrSpider)
         elif text_site == 'Tproger':
             process.crawl(TprogerSpider)
+
         process.start()
 
         with open("items.csv", encoding='utf-8') as r_file:
