@@ -1,8 +1,11 @@
+from cgitb import text
 from kivymd.app import MDApp
 from kivy.uix.boxlayout import BoxLayout
 from kivy.metrics import dp
 
 from news_parse.news_parse.spiders.links_spider import LinksSpider
+from news_parse.news_parse.spiders.habr_spider import HabrSpider
+from news_parse.news_parse.spiders.tproger_spider import TprogerSpider
 from scrapy.crawler import CrawlerProcess
 # from scrapy.utils.log import configure_logging
 import webbrowser    
@@ -45,7 +48,12 @@ class Stack(BoxLayout):
             'LOG_ENABLED': 'False'
         })
 
-        process.crawl(LinksSpider)
+        if text_site == 'Trashbox':
+            process.crawl(LinksSpider)
+        elif text_site == 'Habr':
+            process.crawl(HabrSpider)
+        elif text_site == 'Tproger':
+            process.crawl(TprogerSpider)
         process.start()
 
         with open("items.csv", encoding='utf-8') as r_file:

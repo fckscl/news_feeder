@@ -10,7 +10,7 @@ from itemloaders.processors import TakeFirst, MapCompose
 
 class NewsParseItem(scrapy.Item):
     # define the fields for your item here like:
-    title = scrapy.Field()
+    title = scrapy.Field(input_processor = MapCompose(output_processor = TakeFirst()))
     text = scrapy.Field(input_processor = MapCompose(output_processor = TakeFirst()))
     next = scrapy.Field()
     link = scrapy.Field()
