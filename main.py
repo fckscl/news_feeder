@@ -6,13 +6,14 @@ from news_parse.news_parse.spiders.links_spider import LinksSpider
 from news_parse.news_parse.spiders.habr_spider import HabrSpider
 from news_parse.news_parse.spiders.tproger_spider import TprogerSpider
 from scrapy.crawler import CrawlerProcess
-# from scrapy.utils.log import configure_logging
+from twisted.internet.error import ReactorAlreadyInstalledError
 import webbrowser    
 import csv
  
 from kivymd.theming import ThemeManager
 from kivymd.uix.button import MDFillRoundFlatButton, MDRoundFlatButton
 from kivymd.uix.menu import MDDropdownMenu
+from kivymd.toast import toast
 
 
 class News(BoxLayout):
@@ -37,25 +38,27 @@ class News(BoxLayout):
 
 class Stack(BoxLayout):
     def site_selected(self, text_site):
-        print(self)
-        process = CrawlerProcess(settings={
-            "FEEDS": {
-                "items.csv": {
-                    "format": "csv",
-                    'overwrite': 'True'},
-            },
-            'LOG_ENABLED': 'False'
-        })
+        try:
+            process = CrawlerProcess(settings={
+                "FEEDS": {
+                    "items.csv": {
+                        "format": "csv",
+                        'overwrite': 'True'},
+                },
+                'LOG_ENABLED': 'False'
+            })
 
-        if text_site == 'Trashbox':
-            process.crawl(LinksSpider)
-        elif text_site == 'Habr':
-            process.crawl(HabrSpider)
-        elif text_site == 'Tproger':
-            process.crawl(TprogerSpider)
+            if text_site == 'Trashbox':
+                process.crawl(LinksSpider)
+            elif text_site == 'Habr':
+                process.crawl(HabrSpider)
+            elif text_site == 'Tproger':
+                process.crawl(TprogerSpider)
 
-        process.start()
-        process.stop()
+            process.start()
+            process.stop()
+        except ReactorAlreadyInstalledError:
+            toast('Для выбора другого сайта перезапустите приложение')
 
         with open("items.csv", encoding='utf-8') as r_file:
             # Создаем объект DictReader, указываем символ-разделитель ","
