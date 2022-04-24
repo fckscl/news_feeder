@@ -1,4 +1,3 @@
-from cgitb import text
 from kivymd.app import MDApp
 from kivy.uix.boxlayout import BoxLayout
 from kivy.metrics import dp
@@ -56,6 +55,7 @@ class Stack(BoxLayout):
             process.crawl(TprogerSpider)
 
         process.start()
+        process.stop()
 
         with open("items.csv", encoding='utf-8') as r_file:
             # Создаем объект DictReader, указываем символ-разделитель ","
