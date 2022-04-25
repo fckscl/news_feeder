@@ -80,10 +80,10 @@ class Stack(BoxLayout):
         #     n = News('text', 'title')
         #     n.t = str(i+1)
         #     self.add_widget(n)
-        btn_next = MDFillRoundFlatButton(text=f'Следующая страница {text_site}', on_release=lambda _: self.site_selected(text_site=text_site))
-        btn_next.size_hint = (1, None)
-        btn_next.height = dp(48)
-        self.add_widget(btn_next)
+        # btn_next = MDFillRoundFlatButton(text=f'Следующая страница {text_site}', on_release=lambda _: self.site_selected(text_site=text_site))
+        # btn_next.size_hint = (1, None)
+        # btn_next.height = dp(48)
+        # self.add_widget(btn_next)
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
