@@ -75,15 +75,9 @@ class Stack(BoxLayout):
                 n = News(row['title'], row['text'], row['link'][6:-2])
                 self.add_widget(n)
             print(f'Всего в файле {count + 1} строк.')
+        self.children[-1].text = text_site
+        print(self.children[-1])
 
-        # for i in range(10):
-        #     n = News('text', 'title')
-        #     n.t = str(i+1)
-        #     self.add_widget(n)
-        # btn_next = MDFillRoundFlatButton(text=f'Следующая страница {text_site}', on_release=lambda _: self.site_selected(text_site=text_site))
-        # btn_next.size_hint = (1, None)
-        # btn_next.height = dp(48)
-        # self.add_widget(btn_next)
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -102,8 +96,11 @@ class Stack(BoxLayout):
         select = MDDropdownMenu(
             width_mult=4,
             caller=site, 
-            items=menu_items
+            items=menu_items,
+            max_height=dp(168),
+            radius=[24, 4, 24, 4]
             )
+        
         site.on_release = select.open
         self.add_widget(site)
         
