@@ -11,14 +11,13 @@ import webbrowser
 import csv
  
 from kivymd.theming import ThemeManager
-from kivymd.uix.button import MDFillRoundFlatButton, MDRoundFlatButton
+from kivymd.uix.button import MDRoundFlatButton
 from kivymd.uix.menu import MDDropdownMenu
+from kivymd.uix.stacklayout import MDStackLayout
 from kivymd.toast import toast
 
 
 class News(BoxLayout):
-    # t = 'Заглавие новости'
-    # parse = 'You can bind to events in Kv using the “:” syntax, that is, associating a callback to an event:Widget:    on_size: my_callback()You can pass he values dispatched by the signal using the args eyword:TextInput:    on_text: app.search(args[1])More omplex expressions can be used, like:pos: self.enter_x - self.texture_size[0] / 2., self.center_y - elf.texture_size[1] / 2.This expression listens for a hange in center_x, center_y, and texture_size. If one of them changes, the expression will be re-evaluated to update the pos field.'
     link = ''
 
     def __init__(self, title, text, link, **kwargs):
@@ -30,10 +29,6 @@ class News(BoxLayout):
     def button_clicked(self):
         print(self.link)    
         webbrowser.open(self.link)
-        # print(self.parse)
-        # print(self.ids)
-        # self.parent.ids.label_text.text = self.parent.parse
-        # self.ids.label_text.text = self.parse
     
 
 class Stack(BoxLayout):
@@ -72,11 +67,11 @@ class Stack(BoxLayout):
                     print(f'Файл содержит столбцы: {", ".join(row)}')
                 # Вывод строк
                 count += 1
-                n = News(row['title'], row['text'], row['link'][6:-2])
+                topick = row['text'][:1000] + '...\nДля просмотра полной статьи нажмите на кнопку-заголовок'
+                n = News(row['title'], topick, row['link'][6:-2])
                 self.add_widget(n)
             print(f'Всего в файле {count + 1} строк.')
         self.children[-1].text = text_site
-        print(self.children[-1])
 
     
     def __init__(self, **kwargs):
