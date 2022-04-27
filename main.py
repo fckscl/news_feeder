@@ -93,6 +93,7 @@ class Stack(BoxLayout):
             caller=site, 
             items=menu_items,
             max_height=dp(168),
+            background_color = '#4869D6',
             radius=[24, 4, 24, 4]
             )
         

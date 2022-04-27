@@ -6,20 +6,34 @@
 Parse:
 
 <News>:
+    canvas:
+        Color:
+            rgba: 0.04, 0.38, 0.64, 0.5    # Blue
+
+        # size and position of Canvas
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: 15, 15, 15, 15
     orientation: 'vertical'
-    size_hint: 1, None
+    size_hint: 0.8, None
+    # spacing: '10dp'
+    pos_hint: {'center_x' : 0.5}
     height: self.minimum_height
     MDFillRoundFlatButton:
         id: button_title
-        size_hint: 0.8, None
+        size_hint: 1, None
         pos_hint: {'center_x' : 0.5}
         on_press: root.button_clicked()
     MDLabel:
         id: label_text
         pos_hint: {'center_x' : 0.5}
-        size_hint: 0.8, None
+        size_hint: 1, None
+        halign: 'center'
         text_size: root.width, None
         size: self.texture_size
+        padding: '15dp', '15dp'
+        
 
 <Parse@ScrollView>:
     Stack:
